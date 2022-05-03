@@ -56,6 +56,28 @@ class OverworldEvent {
     };
     document.addEventListener("PersonWalkingComplete", completeHandler);
   }
+
+  textMessage(resolve) {
+    // checks to see if the instructions contain faceHero, so the NPC will face the hero
+    if (this.event.faceHero) {
+      // this.event.faceHere will be the ID
+      const obj = this.map.gameObjects[this.event.faceHero];
+      obj.direction = utils.oppositeDirection(
+        //finds the hero's direction and passes that into oppositeDirection
+        this.map.gameObjects["hero"].direction
+      );
+    }
+
+    // text comes from overworld event config object
+    const message = new TextMessage({
+      text: this.event.text,
+      // to be called when the player has acknowledged the message (clicked button/pressed enter)
+      onComplete: () => resolve(),
+    });
+    // we need to pass init a DOM container where we want to send our message
+    message.init(document.querySelector(".game-container"));
+  }
+
   // kicks of an instructional method
   init() {
     return new Promise((resolve) => {

@@ -17,6 +17,9 @@ class GameObject {
     this.behaviourLoop = config.behaviourLoop || [];
     // keeps track of which behaviour are we on right now
     this.behaviourLoopIndex = 0;
+
+    // ready to accept talking
+    this.talking = config.talking || [];
   }
 
   mount(map) {
@@ -35,7 +38,11 @@ class GameObject {
   async doBehaviourEvent(map) {
     //Don't do anything if there is a more important cutscene or I don't have config to do anything
     //anyway.
-    if (map.isCutscenePlaying || this.behaviourLoop.length === 0) {
+    if (
+      map.isCutscenePlaying ||
+      this.behaviourLoop.length === 0 ||
+      this.isStanding
+    ) {
       return;
     }
 
