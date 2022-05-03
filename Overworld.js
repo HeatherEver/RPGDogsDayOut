@@ -26,6 +26,8 @@ class Overworld {
       this.map.drawLowerImage(this.ctx, cameraPerson);
 
       //Draw Game Objects
+      // sort the values so the smaller y values are upfront so the northern characters will be drawn before southern characters
+      // to makes sure they are layered correctly
       Object.values(this.map.gameObjects)
         .sort((a, b) => {
           return a.y - b.y;
@@ -58,6 +60,8 @@ class Overworld {
       { who: "hero", type: "walk", direction: "down" },
       { who: "npcA", type: "walk", direction: "left" },
       { who: "npcA", type: "walk", direction: "left" },
+      { who: "npcB", type: "walk", direction: "down" },
+      { who: "npcB", type: "stand", direction: "right" },
       { who: "npcA", type: "stand", direction: "up", time: 800 },
     ]);
   }

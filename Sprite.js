@@ -2,13 +2,14 @@ class Sprite {
   constructor(config) {
     //Set up the image
     this.image = new Image();
-    this.image.src = config.src;
+    this.image.src = config.src; // <-- when creating a new sprite we will pass in a configuration
+    //
     this.image.onload = () => {
       this.isLoaded = true;
     };
 
     //Shadow
-    this.shadow = new Image();
+    this.shadow = new Image(); // <--- create a new image in memory
     this.useShadow = true; //config.useShadow || false
     if (this.useShadow) {
       this.shadow.src = "/images/characters/shadow.png";
@@ -19,7 +20,7 @@ class Sprite {
 
     //Configure Animation & Initial State
     this.animations = config.animations || {
-      "idle-down": [[0, 0]],
+      "idle-down": [[0, 0]], // <--- idle down will just use this one frame at 0, 0
       "idle-right": [[0, 1]],
       "idle-up": [[0, 2]],
       "idle-left": [[0, 3]],
@@ -28,7 +29,7 @@ class Sprite {
         [0, 0],
         [3, 0],
         [0, 0],
-      ],
+      ], // <---- walk down uses 4 frames to make it appear as though the sprite is walking
       "walk-right": [
         [1, 1],
         [0, 1],
@@ -48,7 +49,9 @@ class Sprite {
         [0, 3],
       ],
     };
+    // this will be a key in our animations
     this.currentAnimation = "idle-right"; // config.currentAnimation || "idle-down";
+    // which array within the array are we showing to start
     this.currentAnimationFrame = 0;
 
     this.animationFrameLimit = config.animationFrameLimit || 8;

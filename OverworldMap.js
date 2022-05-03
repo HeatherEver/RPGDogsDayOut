@@ -34,6 +34,7 @@ class OverworldMap {
   }
 
   mountObjects() {
+    //iterate through keys to set an id
     Object.keys(this.gameObjects).forEach((key) => {
       let object = this.gameObjects[key];
       object.id = key;
@@ -44,8 +45,10 @@ class OverworldMap {
   }
 
   async startCutscene(events) {
+    //set flag to true
     this.isCutscenePlaying = true;
 
+    // maps through the cutscene moves and acts them out
     for (let i = 0; i < events.length; i++) {
       const eventHandler = new OverworldEvent({
         event: events[i],
@@ -54,6 +57,7 @@ class OverworldMap {
       await eventHandler.init();
     }
 
+    //once run set back to false
     this.isCutscenePlaying = false;
   }
 
@@ -84,7 +88,8 @@ window.OverworldMaps = {
         x: utils.withGrid(7),
         y: utils.withGrid(9),
         src: "/images/characters/npc3.png",
-        behaviorLoop: [
+        // defines the behaviour of the characters
+        behaviourLoop: [
           { type: "stand", direction: "left", time: 800 },
           { type: "stand", direction: "up", time: 800 },
           { type: "stand", direction: "right", time: 1200 },
@@ -95,7 +100,7 @@ window.OverworldMaps = {
         x: utils.withGrid(3),
         y: utils.withGrid(7),
         src: "/images/characters/npc2.png",
-        behaviorLoop: [
+        behaviourLoop: [
           { type: "walk", direction: "left" },
           { type: "stand", direction: "up", time: 800 },
           { type: "walk", direction: "up" },
@@ -104,6 +109,8 @@ window.OverworldMaps = {
         ],
       }),
     },
+
+    // setting walls that cannot be walked into
     walls: {
       [utils.asGridCoord(7, 6)]: true,
       [utils.asGridCoord(8, 6)]: true,
