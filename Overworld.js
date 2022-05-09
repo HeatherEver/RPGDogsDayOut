@@ -64,9 +64,14 @@ class Overworld {
     });
   }
 
-  init() {
-    this.map = new OverworldMap(window.OverworldMaps.DemoRoom);
+  startMap(mapConfig) {
+    this.map = new OverworldMap(mapConfig);
+    this.map.overworld = this;
     this.map.mountObjects();
+  }
+
+  init() {
+    this.startMap(window.OverworldMaps.DemoRoom);
 
     this.bindActionInput();
     this.bindHeroPositionCheck();
@@ -76,18 +81,9 @@ class Overworld {
 
     this.startGameLoop();
 
-    // this.map.startCutscene([
-    //   { who: "hero", type: "walk", direction: "down" },
-    //   { who: "hero", type: "walk", direction: "down" },
-    //   { who: "npcA", type: "walk", direction: "up" },
-    //   { who: "hero", type: "stand", direction: "right" },
-    //   { who: "npcA", type: "walk", direction: "left" },
-    //   { type: "textMessage", text: "HELLO MASSIVE CAT!" },
-    //   { type: "textMessage", text: "HELLO SAM!" },
-    //   { who: "hero", type: "walk", direction: "left" },
-
-    //   { who: "npcB", type: "stand", direction: "right" },
-    //   { who: "npcA", type: "stand", direction: "up", time: 800 },
-    // ]);
+    this.map.startCutscene([
+      { type: "changeMap", map: "DemoRoom" },
+      { type: "textMessage", text: "This is the very first message!" },
+    ]);
   }
 }

@@ -1,5 +1,7 @@
 class OverworldMap {
   constructor(config) {
+    // for changing maps
+    this.overworld = null;
     this.gameObjects = config.gameObjects;
     this.walls = config.walls || {};
     this.cutsceneSpaces = config.cutsceneSpaces || {};
@@ -115,7 +117,7 @@ window.OverworldMaps = {
       npcA: new Person({
         x: utils.withGrid(7),
         y: utils.withGrid(9),
-        src: "/images/characters/npc3.png",
+        src: "/images/characters/cat1.png",
         // defines the behaviour of the characters
         behaviourLoop: [
           { type: "stand", direction: "left", time: 800 },
@@ -137,7 +139,7 @@ window.OverworldMaps = {
       npcB: new Person({
         x: utils.withGrid(8),
         y: utils.withGrid(5),
-        src: "/images/characters/npc2.png",
+        src: "/images/characters/cat4.png",
         // behaviourLoop: [
         //   { type: "walk", direction: "left" },
         //   { type: "stand", direction: "up", time: 800 },
@@ -169,25 +171,36 @@ window.OverworldMaps = {
           ],
         },
       ],
+      // change map event
+      // the space which triggers the map change
+      [utils.asGridCoord(5, 10)]: [
+        {
+          // this info gets passed into the changeMap function in OverworldEvent
+          events: [{ type: "changeMap", map: "Kitchen" }],
+        },
+      ],
     },
   },
   Kitchen: {
     lowerSrc: "/images/maps/KitchenLower.png",
     upperSrc: "/images/maps/KitchenUpper.png",
     gameObjects: {
-      hero: new GameObject({
-        x: 3,
-        y: 5,
+      hero: new Person({
+        isPlayerControlled: true,
+        x: utils.withGrid(5),
+        y: utils.withGrid(5),
       }),
-      npcA: new GameObject({
-        x: 9,
-        y: 6,
-        src: "/images/characters/npc2.png",
-      }),
-      npcB: new GameObject({
-        x: 10,
-        y: 8,
-        src: "/images/characters/npc3.png",
+      npcB: new Person({
+        x: utils.withGrid(10),
+        y: utils.withGrid(8),
+        src: "/images/characters/cat5.png",
+        talking: [
+          {
+            events: [
+              { type: "textMessage", text: "You made it!", faceHero: "npcB" },
+            ],
+          },
+        ],
       }),
     },
   },

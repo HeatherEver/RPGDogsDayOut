@@ -78,6 +78,16 @@ class OverworldEvent {
     message.init(document.querySelector(".game-container"));
   }
 
+  changeMap(resolve) {
+    const sceneTransition = new SceneTransition();
+    sceneTransition.init(document.querySelector(".game-container"), () => {
+      this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
+      resolve();
+
+      sceneTransition.fadeOut();
+    });
+  }
+
   // kicks of an instructional method
   init() {
     return new Promise((resolve) => {

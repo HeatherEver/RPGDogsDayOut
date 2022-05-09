@@ -10,7 +10,7 @@ class GameObject {
     //
     this.sprite = new Sprite({
       gameObject: this,
-      src: config.src || "/images/characters/blackCat2.png",
+      src: config.src || "/images/characters/main.png",
     });
 
     // listen for the behaviour loops

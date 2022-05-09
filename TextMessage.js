@@ -15,9 +15,17 @@ class TextMessage {
 
     //the inner HTML we will inject with some text
     this.element.innerHTML = `
-        <p class="TextMessage_p">${this.text}</p>
+        <p class="TextMessage_p">
+        </p>
         <button class="TextMessage_button">Next</button>
       `;
+
+    //Init the typewriter effect
+    this.revealingText = new RevealingText({
+      // the element we want to fill with the p tags
+      element: this.element.querySelector(".TextMessage_p"),
+      text: this.text,
+    });
 
     this.element.querySelector("button").addEventListener("click", () => {
       //Close the text message
@@ -25,20 +33,23 @@ class TextMessage {
     });
 
     this.actionListener = new KeyPressListener("Enter", () => {
-      this.actionListener.unbind();
       this.done();
     });
   }
 
   done() {
-    // removes element from screen
-    this.element.remove();
-    // calls onComplete
-    this.onComplete();
+    if (this.revealingText.isDone) {
+      this.element.remove();
+      this.actionListener.unbind();
+      this.onComplete();
+    } else {
+      this.revealingText.warpToDone();
+    }
   }
 
   init(container) {
     this.createElement();
     container.appendChild(this.element);
+    this.revealingText.init();
   }
 }
