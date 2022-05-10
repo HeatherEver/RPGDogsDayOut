@@ -88,6 +88,15 @@ class OverworldEvent {
     });
   }
 
+  battle(resolve) {
+    const battle = new Battle({
+      onComplete: () => {
+        resolve();
+      },
+    });
+    battle.init(document.querySelector(".game-container"));
+  }
+
   // kicks of an instructional method
   init() {
     return new Promise((resolve) => {
